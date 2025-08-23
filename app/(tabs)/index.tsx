@@ -1,9 +1,22 @@
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Alert } from "react-native";
 import { FontAwesome } from '@expo/vector-icons';
+import { useRouter } from 'expo-router'; // Import useRouter
 
 export default function Index() {
+  const router = useRouter(); // Initialize router
+
+  const handlePortalPress = (portalType: 'doctor' | 'patient') => {
+    // Navigates to the LoginPage, passing the userType as a parameter
+    router.push({ pathname: '/screens/LoginPage', params: { userType: portalType } });
+  };
+
+  const handleCardPress = (cardTitle: string) => {
+    // This could navigate to a detailed feature screen or show a modal
+    Alert.alert(`Tapped on ${cardTitle}`, 'This would take you to a detailed feature page.');
+  };
+
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.centeredContent}>
         {/* Header: Icon + Title side by side */}
         <View style={styles.header}>
@@ -16,11 +29,11 @@ export default function Index() {
           Connecting patients with mental health professionals through our comprehensive platform
         </Text>
 
-        {/* Buttons */}
+        {/* Portal Buttons */}
         <View style={styles.buttonRow}>
           <TouchableOpacity
             style={styles.doctorButton}
-            onPress={() => alert("Doctor Portal Coming Soon")}
+            onPress={() => handlePortalPress('doctor')}
           >
             <FontAwesome name="stethoscope" size={18} color="white" style={{ marginRight: 8 }} />
             <Text style={[styles.buttonText, { color: "white" }]}>Doctor Portal</Text>
@@ -28,7 +41,7 @@ export default function Index() {
 
           <TouchableOpacity
             style={styles.userButton}
-            onPress={() => alert("User Portal Coming Soon")}
+            onPress={() => handlePortalPress('patient')}
           >
             <FontAwesome name="user" size={18} color="#256D4A" style={{ marginRight: 8 }} />
             <Text style={[styles.buttonText, { color: "#256D4A" }]}>User Portal</Text>
@@ -37,24 +50,24 @@ export default function Index() {
 
         {/* Feature Cards */}
         <View style={styles.features}>
-          <View style={styles.card}>
-            <FontAwesome name="calendar" size={28} color="#256D4A" style={styles.featureIcon} />
+          <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Easy Scheduling')}>
+            <FontAwesome name="calendar-o" size={28} color="#256D4A" style={styles.featureIcon} />
             <Text style={styles.cardTitle}>Easy Scheduling</Text>
             <Text style={styles.cardSubtitle}>Book and manage appointments seamlessly</Text>
-          </View>
-          <View style={styles.card}>
-            <FontAwesome name="commenting" size={28} color="#256D4A" style={styles.featureIcon} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Secure Messaging')}>
+            <FontAwesome name="comments-o" size={28} color="#256D4A" style={styles.featureIcon} />
             <Text style={styles.cardTitle}>Secure Messaging</Text>
             <Text style={styles.cardSubtitle}>Communicate safely with your healthcare team</Text>
-          </View>
-          <View style={styles.card}>
-            <FontAwesome name="user-o" size={28} color="#256D4A" style={styles.featureIcon} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.card} onPress={() => handleCardPress('Personal Care')}>
+            <FontAwesome name="heart-o" size={28} color="#256D4A" style={styles.featureIcon} />
             <Text style={styles.cardTitle}>Personal Care</Text>
             <Text style={styles.cardSubtitle}>Tailored mental health support for everyone</Text>
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
