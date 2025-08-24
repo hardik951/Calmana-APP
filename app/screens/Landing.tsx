@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/stack';
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Alert } from 'react-native';
 
 const Landing = () => {
@@ -7,7 +7,9 @@ const Landing = () => {
 
   // Since portals are not ready, show alert on button press
   const handleDoctorPortal = () => Alert.alert('Coming Soon', 'Doctor Portal screen is not available yet.');
-  const handlePatientPortal = () => Alert.alert('Coming Soon', 'Patient Portal screen is not available yet.');
+  const handlePatientPortal = () => {
+    navigation.navigate('Login' as never);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -105,7 +107,6 @@ const styles = StyleSheet.create({
   portals: {
     flexDirection: 'row',
     justifyContent: 'center',
-    gap: 16,
     marginBottom: 12,
   },
   doctorBtn: {
@@ -141,12 +142,12 @@ const styles = StyleSheet.create({
   portalSubtext: {
     flexDirection: 'row',
     justifyContent: 'center',
-    gap: 48,
     marginBottom: 36,
   },
   portalSubtextItem: {
     color: '#6C805F',
     fontSize: 14,
+    marginHorizontal: 24,
   },
   features: {
     flexDirection: 'row',

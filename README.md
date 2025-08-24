@@ -1,50 +1,96 @@
-# Welcome to your Expo app 👋
+# Calmana App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A mental health platform connecting patients with mental health professionals through a comprehensive mobile application.
 
-## Get started
+## Features
 
-1. Install dependencies
+### Patient Dashboard
+- **Mood Tracking**: Track your daily mood with visual charts
+- **Personal Diary**: Write and manage your daily entries
+- **AI Assistant**: Chat with AI for mental wellness support
+- **Community**: Connect with other users anonymously
+- **Notifications**: Stay updated with session reminders
+- **Emergency SOS**: Quick access to crisis support
+- **Premium Features**: Access to unlimited sessions
 
-   ```bash
-   npm install
-   ```
+### Authentication
+- Simple login system (accepts any email/password for demo)
+- User type selection (Patient/Doctor)
+- Secure navigation between screens
 
-2. Start the app
+## Getting Started
 
-   ```bash
-   npx expo start
-   ```
+### Prerequisites
+- Node.js (v16 or higher)
+- Expo CLI
+- React Native development environment
 
-In the output, you'll find options to open the app in a
+### Installation
+1. Clone the repository
+2. Navigate to the project directory: `cd Calmana-APP`
+3. Install dependencies: `npm install`
+4. Start the development server: `npm start`
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### Usage
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+#### For Patients:
+1. Open the app and tap "👤 Patient Portal"
+2. Enter any email and password
+3. Select "Patient" as user type
+4. Tap "Login" to access the Patient Dashboard
+5. Use the dashboard to track mood, write diary entries, and access AI assistance
+6. Tap the back arrow or power button to logout
 
-## Get a fresh project
+#### For Developers:
+- The app uses React Native with Expo
+- Navigation is handled by React Navigation
+- Icons are provided by FontAwesome via @expo/vector-icons
+- Styling uses React Native StyleSheet
 
-When you're ready, run:
+## Project Structure
 
-```bash
-npm run reset-project
+```
+Calmana-APP/
+├── app/
+│   ├── screens/
+│   │   ├── Landing.tsx          # Landing page with portal selection
+│   │   ├── LoginPage.tsx        # Login form and authentication
+│   │   ├── PatientDashboard.tsx # Main patient interface
+│   │   └── SignupPage.tsx       # User registration
+│   └── (tabs)/                  # Tab-based navigation
+├── components/                   # Reusable UI components
+├── constants/                    # App constants and colors
+└── AppNavigator.tsx             # Main navigation setup
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Demo Login
 
-## Learn more
+For demonstration purposes, the app accepts any email and password combination. Simply:
+1. Enter any email (e.g., "test@example.com")
+2. Enter any password (e.g., "password123")
+3. Select "Patient" as user type
+4. Tap "Login"
 
-To learn more about developing your project with Expo, look at the following resources:
+## Development
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Adding New Features
+- New screens should be added to `app/screens/`
+- Update `AppNavigator.tsx` to include new routes
+- Follow the existing component patterns for consistency
 
-## Join the community
+### Styling
+- Use the existing color scheme defined in `constants/Colors.ts`
+- Follow the StyleSheet patterns used in existing components
+- Maintain responsive design for different screen sizes
 
-Join our community of developers creating universal apps.
+## Contributing
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## License
+
+This project is licensed under the MIT License.

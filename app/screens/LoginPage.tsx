@@ -11,6 +11,8 @@ import {
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons'; // Using @expo/vector-icons
 import { useLocalSearchParams, useRouter } from 'expo-router'; // Import useRouter and useLocalSearchParams
+import { PatientDashboard } from './PatientDashboard';
+import { TherapyDiagnosis } from './TherapyDiagnosis';
 
 // Define a type for the userType state
 type UserType = 'patient' | 'doctor';
@@ -25,6 +27,8 @@ const LoginPage: React.FC = () => { // Correctly named LoginPage
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [message, setMessage] = useState<string>('');
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [currentView, setCurrentView] = useState<string>('dashboard');
 
   // Update userType if params change (e.g., navigating back to this screen with a different type)
   useEffect(() => {
@@ -41,23 +45,58 @@ const LoginPage: React.FC = () => { // Correctly named LoginPage
       return;
     }
 
-    Alert.alert(
-      'Login Attempt',
-      `Logging in as ${userType} with email: ${email}`,
-      [{ text: 'OK' }]
-    );
+    // For demo purposes, accept any email/password combination
     console.log(`User Type: ${userType}, Email: ${email}, Password: ${password}`);
 
+    // Simulate login success
     setTimeout(() => {
       setMessage(`Login successful for ${userType}!`);
-      // After successful login, you might want to redirect to the home tab or another secure area
-      // For example: router.replace('/home'); or router.replace('/(tabs)');
-    }, 1500);
+      setIsLoggedIn(true);
+    }, 1000);
   };
 
   const handleGoToSignup = () => {
     router.push('/screens/SignupPage'); // Navigate to SignupPage
   };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setEmail('');
+    setPassword('');
+    setMessage('');
+  };
+
+  const handleNavigate = (view: string) => {
+    console.log(`Navigating to: ${view}`);
+    setCurrentView(view);
+  };
+
+  // If user is logged in and is a patient, show the appropriate view
+  if (isLoggedIn && userType === 'patient') {
+    switch (currentView) {
+      case 'diagnosis':
+        return <TherapyDiagnosis onNavigate={handleNavigate} />;
+      default:
+        return <PatientDashboard onNavigate={handleNavigate} onLogout={handleLogout} />;
+    }
+  }
+  
+  // If user is logged in and is a doctor, show a simple message (you can replace this with DoctorDashboard later)
+  if (isLoggedIn && userType === 'doctor') {
+    return (
+      <SafeAreaView style={styles.safeArea}>
+        <View style={styles.container}>
+          <View style={styles.card}>
+            <Text style={styles.title}>Doctor Portal</Text>
+            <Text style={styles.subtitle}>Doctor dashboard coming soon...</Text>
+            <TouchableOpacity style={styles.loginButton} onPress={handleLogout}>
+              <Text style={styles.loginButtonText}>Back to Login</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.safeArea}>
