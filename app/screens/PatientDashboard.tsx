@@ -14,7 +14,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { WelcomeSection } from '../../components/WelcomeSection';
 import { MoodTracker } from '../../components/MoodTracker';
 import { AIAssistant } from '../../components/AIAssistant';
-import { SessionCard } from '../../components/SessionCard';
+import { AppointmentBooking } from './AppointmentBooking';
 
 interface PatientDashboardProps {
   onNavigate: (view: string) => void;
@@ -38,7 +38,10 @@ export function PatientDashboard({ onNavigate, onLogout }: PatientDashboardProps
         styles.sidebarItem,
         activeSidebarItem === key && styles.sidebarItemActive
       ]}
-      onPress={() => setActiveSidebarItem(key)}
+      onPress={() => {
+        setActiveSidebarItem(key);
+        setIsSidebarOpen(false); // Close sidebar after selection
+      }}
     >
       <FontAwesome
         name={icon as any}
@@ -124,13 +127,31 @@ export function PatientDashboard({ onNavigate, onLogout }: PatientDashboardProps
               </View>
             </View>
             
-            {/* Session Card with Graphics */}
-            <View style={styles.sessionContainer}>
+            {/* Book Appointment Section */}
+            <View style={styles.appointmentContainer}>
               <View style={styles.sectionHeader}>
-                <FontAwesome name="stethoscope" size={24} color="#4F7C52" />
-                <Text style={styles.sectionTitle}>Mental Health Assessment</Text>
+                <FontAwesome name="calendar" size={24} color="#4F7C52" />
+                <Text style={styles.sectionTitle}>Book Appointment</Text>
               </View>
-              <SessionCard onNavigate={onNavigate} />
+              <View style={styles.appointmentCard}>
+                <View style={styles.appointmentContent}>
+                  <View style={styles.appointmentGraphics}>
+                    <FontAwesome name="calendar" size={32} color="#4F7C52" />
+                    <FontAwesome name="user-md" size={20} color="#10B981" style={styles.appointmentIcon} />
+                    <FontAwesome name="clock-o" size={18} color="#3B82F6" style={styles.appointmentTimeIcon} />
+                  </View>
+                  <Text style={styles.appointmentText}>
+                    Schedule an appointment with our mental health specialists. Choose from video consultations or in-person visits.
+                  </Text>
+                  <TouchableOpacity 
+                    style={styles.appointmentButton}
+                    onPress={() => setActiveSidebarItem('book-appointment')}
+                  >
+                    <FontAwesome name="calendar" size={16} color="#FFFFFF" />
+                    <Text style={styles.appointmentButtonText}>Book Appointment</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
             </View>
 
             {/* Wellness Stats */}
@@ -164,6 +185,9 @@ export function PatientDashboard({ onNavigate, onLogout }: PatientDashboardProps
 
       case 'ai-assistant':
         return <AIAssistant onNavigate={onNavigate} />;
+
+      case 'book-appointment':
+        return <AppointmentBooking onNavigate={onNavigate} />;
 
       case 'chatrooms':
         return (
@@ -233,7 +257,7 @@ export function PatientDashboard({ onNavigate, onLogout }: PatientDashboardProps
             style={styles.sidebarToggle}
             onPress={() => setIsSidebarOpen(!isSidebarOpen)}
           >
-            <FontAwesome name="stethoscope" size={24} color="#4F7C52" />
+            <FontAwesome name="bars" size={24} color="#4F7C52" />
           </TouchableOpacity>
           <View style={styles.logoContainer}>
             <FontAwesome name="stethoscope" size={20} color="#FFFFFF" />
@@ -261,6 +285,7 @@ export function PatientDashboard({ onNavigate, onLogout }: PatientDashboardProps
               <View style={styles.sidebarContent}>
                 {/* Main Navigation */}
                 {renderSidebarItem('home', 'DASHBOARD', 'dashboard')}
+                {renderSidebarItem('calendar', 'BOOK APPOINTMENT', 'book-appointment')}
                 {renderSidebarItem('cog', 'AI ASSISTANT', 'ai-assistant')}
                 {renderSidebarItem('comments', 'CHATROOMS', 'chatrooms')}
                 {renderSidebarItem('envelope', 'DIRECT MESSAGES', 'direct-messages')}
@@ -652,8 +677,58 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginLeft: 8,
   },
-  sessionContainer: {
+  appointmentContainer: {
     marginBottom: 24,
+  },
+  appointmentCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    padding: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 1,
+  },
+  appointmentContent: {
+    alignItems: 'center',
+  },
+  appointmentGraphics: {
+    position: 'relative',
+    marginBottom: 16,
+  },
+  appointmentIcon: {
+    position: 'absolute',
+    top: -8,
+    right: -8,
+  },
+  appointmentTimeIcon: {
+    position: 'absolute',
+    bottom: -8,
+    left: -8,
+  },
+  appointmentText: {
+    fontSize: 16,
+    color: '#4F7C52',
+    textAlign: 'center',
+    lineHeight: 24,
+    marginBottom: 20,
+  },
+  appointmentButton: {
+    backgroundColor: '#4F7C52',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 25,
+  },
+  appointmentButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '600',
+    marginLeft: 8,
   },
   statsContainer: {
     marginBottom: 24,
@@ -738,4 +813,6 @@ const styles = StyleSheet.create({
     color: '#374151',
   },
 });
+
+
 

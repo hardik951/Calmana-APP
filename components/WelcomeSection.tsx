@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { DashboardCard } from './DashboardCard';
-import { Button } from './Button';
 
 interface WelcomeSectionProps {
   onNavigate: (view: string) => void;
@@ -20,16 +19,8 @@ export function WelcomeSection({ onNavigate }: WelcomeSectionProps) {
       <View style={styles.welcomeContent}>
         <View style={styles.welcomeText}>
           <Text style={styles.welcomeDescription}>
-            Calmana is here to help you relax, refocus, and renew. Start a calming session whenever you need a moment of peace.
+            Calmana is here to help you relax, refocus, and renew. Welcome to your personalized mental wellness journey.
           </Text>
-          <Button
-            title="Start Session"
-            onPress={() => onNavigate('diagnosis')}
-            variant="primary"
-            size="large"
-            icon={<FontAwesome name="play" size={16} color="#FFFFFF" />}
-            style={styles.startButton}
-          />
         </View>
         <View style={styles.welcomeIcon}>
           <FontAwesome name="heart" size={64} color="#4F7C52" />
@@ -54,13 +45,12 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     marginBottom: 20,
   },
-  startButton: {
-    alignSelf: 'flex-start',
-  },
   welcomeIcon: {
     alignItems: 'center',
     justifyContent: 'center',
   },
 });
+
+
 
 
